@@ -1,0 +1,43 @@
+﻿@page "/searchrecipe"
+@using RecipesPWA.Common
+@using RecipesPWA.Common.Recipes
+@using RecipesPWA.Shared.Components
+@inject IRequestService<Recipe> RequestService
+
+<PageTitle>Receptek</PageTitle>
+
+<h1>Recept keresés</h1>
+
+<EditForm EditContext="@_editContext">
+
+    <InputText class="input-field" @bind-Value="@NameToSearch" placeholder="Recept neve:"></InputText>
+
+</EditForm>
+
+@if (Recipes != null && Recipes.Any())
+{
+    @foreach (var recipe in Recipes)
+    {
+        <RecipeComponent Recipe="@recipe"></RecipeComponent>
+    }
+}
+
+@code {
+    private EditContext _editContext;
+    private IEnumerable<Recipe> Recipes { get; set; }
+
+    public string NameToSearch { get; set; } = string.Empty;
+
+    private async void OnFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        Recipes = await RequestService.GetByName(NameToSearch);
+        StateHasChanged();
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        _editContext = new(NameToSearch);
+        _editContext.OnFieldChanged += OnFieldChanged;
+        return base.OnInitializedAsync();
+    }
+}

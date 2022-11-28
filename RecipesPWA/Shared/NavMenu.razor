@@ -1,0 +1,63 @@
+﻿@using RecipesPWA.Common
+@inject NavigationManager MyNavigationManager
+@inject IConfiguration Configuration
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">@HeaderText</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Minden recept
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="recipebyname">
+                <span class="oi oi-plus" aria-hidden="true"></span> Kiválasztás
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="searchrecipe">
+                <span class="oi oi-plus" aria-hidden="true"></span> Keresés
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="createrecipe">
+                <span class="oi oi-plus" aria-hidden="true"></span> Új recept
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private IEnumerable<PageDescription> PageDescriptions => Configuration
+        .GetSection("PageDescriptions")
+        .Get<IEnumerable<PageDescription>>();
+    private string HeaderText => PageDescriptions
+        .FirstOrDefault(x => x.Uri == MyNavigationManager.ToBaseRelativePath(MyNavigationManager.Uri))?.Description ?? "Receptek";
+
+    protected override Task OnInitializedAsync()
+    {
+        MyNavigationManager.LocationChanged += MyNavigationManagerOnLocationChanged;
+        return base.OnInitializedAsync();
+    }
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void MyNavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+}

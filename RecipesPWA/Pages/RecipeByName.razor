@@ -1,0 +1,40 @@
+﻿@page "/recipebyname"
+@using RecipesPWA.Common
+@using RecipesPWA.Common.Recipes
+@using RecipesPWA.Shared.Components
+@inject IRequestService<Recipe> RequestService
+
+<PageTitle>Receptek</PageTitle>
+
+<h1>Receptek név szerint</h1>
+
+@if (Recipes == null)
+{
+    <p><em>Hamarosan...</em></p>
+}
+else
+{
+    <select class="select-form" @bind="@SelectedRecipe">
+        <option class="select-form-option" value="none">Nincs kiválasztva</option>
+        @foreach (var recipe in Recipes)
+        {
+            <option class="select-form-option" value="@recipe.Id">@recipe.Name</option>
+        }
+    </select>
+    <br />
+    @if (SelectedRecipe != null && SelectedRecipe != "none")
+    {
+        <RecipeComponent Recipe="@Recipes.FirstOrDefault(x => x.Id == SelectedRecipe)"></RecipeComponent>
+    }
+}
+
+@code {
+    private IEnumerable<Recipe>? Recipes { get; set; }
+    private string? SelectedRecipe { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Recipes = await RequestService.GetAll();
+        Recipes = Recipes.OrderBy(x => x.Name);
+    }
+}

@@ -1,0 +1,24 @@
+﻿@using RecipesPWA.Common.Recipes
+@inherits GenericForm<SubRecipe>
+
+<EditForm class="sub-recipe"
+          EditContext="@_editContext"
+          OnValidSubmit="() => InvokeValueChangedCallback(TValue)"
+          OnInvalidSubmit="() => InvokeValueChangedCallback(BackupValue)">
+    <DataAnnotationsValidator/>
+
+    <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Elnevezés:"></InputText>
+    <IngredientsForm @bind-Value="@TValue.Ingredients" Values="@TValue.Ingredients"></IngredientsForm>
+    <InputText class="input-field" @bind-Value="@TValue.Preparation" placeholder="Elkészítés:"></InputText>
+
+    <button class="submit-button input-field-10percent" type="submit">@ButtonText</button>
+
+</EditForm>
+
+@code {
+    public override bool MustBeRemoved() =>
+        string.IsNullOrEmpty(TValue?.Name ?? null);
+
+    public override SubRecipe ResetValue() =>
+        new () { Name = string.Empty, Ingredients = Enumerable.Empty<Ingredient>(), Preparation = string.Empty};
+}

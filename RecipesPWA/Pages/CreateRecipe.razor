@@ -1,0 +1,21 @@
+﻿@page "/createrecipe"
+
+@using RecipesPWA.Shared.FormComponents
+@using RecipesPWA.Common.Recipes
+@using RecipesPWA.Common.Components
+
+<PageTitle>Receptek</PageTitle>
+
+<h1>Új recept</h1>
+
+<EditForm Model="@NewRecipe">
+    <RecipeForm
+        @bind-Value="@NewRecipe"
+        TValue="@NewRecipe.Value" />
+</EditForm>
+
+@code {
+    private OrderedGeneric<Recipe> NewRecipe { get; set; } = new(
+        order: 0,
+        value: new Recipe{ Name = string.Empty, Instructions = Array.Empty<string>(), SubRecipes = Array.Empty<SubRecipe>() });
+}

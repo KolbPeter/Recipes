@@ -1,0 +1,35 @@
+﻿@using RecipesPWA.Common.Recipes
+@using System.Globalization
+
+<div class="recipe">
+    <label><h1>@Recipe.Name</h1></label>
+    <br />
+    @foreach (var subRecipe in Recipe.SubRecipes)
+    {
+        <div class="sub-recipe">
+            <label style="float: right"><h2>@subRecipe.Name</h2></label>
+            <table>
+                @foreach (var ingredient in subRecipe.Ingredients)
+                {
+                    <tr>
+                        <td class="ingredient">@ingredient.Name</td>
+                        <td class="ingredient" style="text-align: right">@ingredient.Quantity.ToString("#.##", CultureInfo.InvariantCulture)</td>
+                        <td class="ingredient">@ingredient.Unit</td>
+                    </tr>
+                }
+            </table>
+            <label>@subRecipe.Preparation</label>
+        </div>
+    }
+    <ol>
+        @foreach (var line in Recipe.Instructions)
+        {
+            <li class="instruction-list">@line</li>
+        }
+    </ol>
+</div>
+
+@code {
+    [Parameter]
+    public Recipe Recipe { get; set; }
+}

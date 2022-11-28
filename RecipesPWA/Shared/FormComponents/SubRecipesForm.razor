@@ -1,0 +1,32 @@
+﻿@using RecipesPWA.Common.Recipes
+@using RecipesPWA.Common.Components
+@inherits GenericEnumerableForm<SubRecipe>;
+
+<EditForm Model="@Values">
+    @foreach (var value in Values.Select((x, i) => new OrderedGeneric<SubRecipe>(x, i)))
+    {
+        <SubRecipeForm @bind-Value="NewTValue"
+                    Order="@value.Order"
+                    IsNew="@false"
+                    TValue="@value.Value" />
+    }
+
+    <SubRecipeForm @bind-Value="NewTValue"
+                    Order="@Values.Count()"
+                    IsNew="@true"
+                    TValue="@NewTValue.Value" />
+</EditForm>
+
+@code {
+    public override OrderedGeneric<SubRecipe> ResetNewTValue()
+    {
+        return new OrderedGeneric<SubRecipe>(
+            value: new() { Name = string.Empty, Ingredients = Enumerable.Empty<Ingredient>(), Preparation = string.Empty },
+            order: Values.Count() + 1);
+    }
+
+    public override bool MustBeRemoved(SubRecipe value)
+    {
+        return string.IsNullOrEmpty(value.Name);
+    }
+}

@@ -1,0 +1,31 @@
+﻿@page "/"
+@using RecipesPWA.Common
+@using RecipesPWA.Common.Recipes
+@using RecipesPWA.Shared.Components
+@inject IRequestService<Recipe> RequestService
+
+<PageTitle>Minden recept</PageTitle>
+
+<h1>Minden recept</h1>
+
+@if (Recipes != null && Recipes.Any())
+{
+    @foreach (var recipe in Recipes)
+    {
+        <RecipeComponent Recipe="@recipe"></RecipeComponent>
+    }
+}
+else
+{
+    <p><em>Hamarosan...</em></p>
+}
+
+@code {
+    private IEnumerable<Recipe> Recipes { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Recipes = await RequestService.GetAll();
+        Recipes = Recipes.OrderBy(x => x.Name);
+    }
+}
