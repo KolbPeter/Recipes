@@ -54,4 +54,4 @@ jobs:
           app-name: 'Recipes-WebApp'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FEDA3C630B794ED7B5991F0E93B765F7 }}
-          package: .
+          package: 'RecipesPWA'
