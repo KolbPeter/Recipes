@@ -1,4 +1,6 @@
-﻿namespace RecipesPWA.Common;
+﻿using RecipesPWA.Common.Recipes;
+
+namespace RecipesPWA.Common;
 
 /// <summary>
 /// Interface for sending requests.
@@ -21,5 +23,15 @@ public interface IRequestService<T> where T : class
     /// <returns>Returns a task that evaluates to a collection of <typeparam name="T">.</typeparam></returns>
     Task<IEnumerable<T>> GetByName(
         string name,
+        IEnumerable<RequestHeader>? headers = null);
+
+    /// <summary>
+    /// Send a request with the given <paramref name="headers"/>.
+    /// </summary>
+    /// <param name="newObject">The object of type <typeparamref name="T"/> to add.</param>
+    /// <param name="headers">The headers for the request.</param>
+    /// <returns>Returns a task that evaluates to an object of <typeparam name="T">.</typeparam></returns>
+    Task<T> Add(
+        T newObject,
         IEnumerable<RequestHeader>? headers = null);
 }

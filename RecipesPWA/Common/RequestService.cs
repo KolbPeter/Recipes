@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace RecipesPWA.Common
 {
@@ -47,6 +48,16 @@ namespace RecipesPWA.Common
             var httpResponseMessage = await _client.GetAsync(url);
             var contentString = await httpResponseMessage.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T[]>(contentString, _serializerOptions) ?? Array.Empty<T>();
+        }
+
+        /// <inheritdoc/>
+        public async Task<T> Add(T newObject, IEnumerable<RequestHeader>? headers = null)
+        {
+            var url = UrlString("/api/Add");
+            var stringContent = new StringContent(JsonSerializer.Serialize(newObject));
+            var httpResponseMessage = await _client.PostAsync(url, stringContent);
+            var contentString = await httpResponseMessage.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(contentString, _serializerOptions)!;
         }
 
         private string UrlString(string route, IEnumerable<HTTPQuery>? queries = null) =>

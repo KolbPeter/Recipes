@@ -16,6 +16,7 @@ namespace RecipesPWA.Common.Recipes
         /// <summary>
         /// Gets or sets the name of the recipe.
         /// </summary>
+        [Required]
         [DisplayFormat(ConvertEmptyStringToNull = true)]
         public string Name { get; set; }
 

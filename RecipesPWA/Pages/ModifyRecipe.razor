@@ -1,0 +1,32 @@
+﻿@page "/modifyrecipe/{recipeId}"
+
+@using RecipesPWA.Shared.FormComponents
+@using RecipesPWA.Common.Recipes
+@using RecipesPWA.Common.Components
+@using RecipesPWA.Common
+@inject IRequestService<Recipe> RequestService
+
+<PageTitle>Receptek</PageTitle>
+
+<h1>Recept módosítása</h1>
+
+<EditForm Model="@NewRecipe">
+    <AddRecipeForm @bind-Value="@NewRecipe"
+                   TValue="@NewRecipe.Value" />
+</EditForm>
+
+@code {
+    [Parameter]
+    public string? recipeId { get; set; }
+
+    private OrderedGeneric<Recipe> NewRecipe { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        var recipe = RequestService.GetAll().Result.First(x => x.Id == recipeId);
+        NewRecipe = new(
+            order: 0,
+            value: recipe);
+        base.OnParametersSet();
+    }
+}

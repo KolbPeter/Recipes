@@ -1,8 +1,9 @@
-﻿@page "/recipebyname"
+﻿@page "/selectrecipe"
 @using RecipesPWA.Common
 @using RecipesPWA.Common.Recipes
 @using RecipesPWA.Shared.Components
 @inject IRequestService<Recipe> RequestService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Receptek</PageTitle>
 
@@ -25,6 +26,9 @@ else
     @if (SelectedRecipe != null && SelectedRecipe != "none")
     {
         <RecipeComponent Recipe="@Recipes.FirstOrDefault(x => x.Id == SelectedRecipe)"></RecipeComponent>
+        <EditForm Model="SelectedRecipe">
+            <button class="submit-button input-field-10percent" type="submit" onclick="@OnModifyClick">Módosít</button>
+        </EditForm>
     }
 }
 
@@ -36,5 +40,10 @@ else
     {
         Recipes = await RequestService.GetAll();
         Recipes = Recipes.OrderBy(x => x.Name);
+    }
+
+    public void OnModifyClick()
+    {
+        NavigationManager.NavigateTo($"modifyrecipe/{SelectedRecipe}");
     }
 }
