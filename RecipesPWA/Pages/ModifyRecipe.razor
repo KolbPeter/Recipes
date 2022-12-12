@@ -5,28 +5,34 @@
 @using RecipesPWA.Common.Components
 @using RecipesPWA.Common
 @inject IRequestService<Recipe> RequestService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Receptek</PageTitle>
 
 <h1>Recept módosítása</h1>
 
-<EditForm Model="@NewRecipe">
-    <AddRecipeForm @bind-Value="@NewRecipe"
-                   TValue="@NewRecipe.Value" />
+<EditForm Model="@RecipeToModify">
+    <AddRecipeForm @bind-Value="@RecipeToModify"
+                   TValue="@RecipeToModify.Value" />
 </EditForm>
 
 @code {
     [Parameter]
-    public string? recipeId { get; set; }
+    public string recipeId { get; set; }
+    
+    private OrderedGeneric<Recipe> RecipeToModify { get; set; }
 
-    private OrderedGeneric<Recipe> NewRecipe { get; set; }
-
-    protected override void OnParametersSet()
+    protected override async Task OnInitializedAsync()
     {
-        var recipe = RequestService.GetAll().Result.First(x => x.Id == recipeId);
-        NewRecipe = new(
+        var recipeToModify = await RequestService.GetById(recipeId);
+        if (recipeToModify == null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+
+        RecipeToModify = new(
             order: 0,
-            value: recipe);
-        base.OnParametersSet();
+            value: recipeToModify);
+        await base.OnInitializedAsync();
     }
 }

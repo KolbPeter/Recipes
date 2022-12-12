@@ -13,9 +13,9 @@
     
     <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Recept:" />
     <SubRecipesForm @bind-Value="@TValue.SubRecipes" Values="@TValue.SubRecipes" />
-    <InputTextArea class="input-field text-input-wide" @bind-Value="@Instruction" />
+    <InputTextArea class="input-field text-input-area" @bind-Value="@Instruction" />
 
-    <button class="submit-button input-field-10percent" type="submit" onclick="@OnMouseClick">@ButtonText</button>
+    <button class="submit-button input-field-10percent right" type="submit" onclick="@OnMouseClick">@ButtonText</button>
 
 </EditForm>
 

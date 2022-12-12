@@ -34,9 +34,14 @@ namespace Common.MongoDb.Repositories
         /// <inheritdoc />
         public virtual async Task<IEnumerable<TDocument>> GetByAsync(string propertyName, string stringToContain) =>
             await collection
-                //.Find(Builders<TDocument>.Filter.StringIn(propertyName, stringToContain))
                 .Find(Builders<TDocument>.Filter.Regex(propertyName, new BsonRegularExpression($@".?{stringToContain}?.")))
                 .ToListAsync();
+
+        /// <inheritdoc />
+        public virtual async Task<TDocument> GetById(string id) =>
+            await collection
+                .Find(x => x.Id == id)
+                .FirstAsync();
 
         /// <inheritdoc />
         public virtual async Task<TDocument> CreateAsync(TDocument newDocument)

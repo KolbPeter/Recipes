@@ -19,12 +19,19 @@ public interface IMongoDbRepository<TDocument>
     Task<IEnumerable<TDocument>> GetAllAsync();
 
     /// <summary>
-    /// Gets all values of a collection which property with name <paramref name="propertyName"/> contains <paramref name="stringToContain"/>.
+    /// Gets all values of a collection where property with name <paramref name="propertyName"/> contains <paramref name="stringToContain"/>.
     /// </summary>
     /// <param name="propertyName">The name of the property to filter on.</param>
     /// <param name="stringToContain">The string to contain.</param>
     /// <returns>Returns a task that evaluates to a collection of <typeparamref name="TDocument"/> when finished.</returns>
     Task<IEnumerable<TDocument>> GetByAsync(string propertyName, string stringToContain);
+
+    /// <summary>
+    /// Gets all values of a collection where the id is equal to <paramref name="id"/>.
+    /// </summary>
+    /// <param name="id">The id to search for.</param>
+    /// <returns>Returns a task that evaluates to a collection of <typeparamref name="TDocument"/> when finished.</returns>
+    Task<TDocument> GetById(string id);
 
     /// <summary>
     /// Adds the given <paramref name="newDocument"/> to the collection. Awaitable.

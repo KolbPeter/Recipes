@@ -23,8 +23,8 @@ namespace RecipesFunctions
 
             try
             {
-                var recepies = await new RecipeRepository().GetAllAsync();
-                return new OkObjectResult(recepies);
+                var recipes = await new RecipeRepository().GetAllAsync();
+                return new OkObjectResult(recipes);
             }
             catch (Exception ex)
             {

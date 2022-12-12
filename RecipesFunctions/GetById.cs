@@ -1,3 +1,5 @@
+using Common;
+using Common.MongoDb.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -8,29 +10,28 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Common;
-using Common.MongoDb.Repositories;
 
 namespace RecipesFunctions
 {
-    public static class GetByName
+    public static class GetById
+
     {
-        [FunctionName("GetByName")]
+        [FunctionName("GetById")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetByName")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetById")] HttpRequest req,
             ExecutionContext executionContext,
             ILogger log)
         {
             log.LogInformation($"{executionContext.FunctionName} processed a request.");
 
-            string nameToSearch = req.Query["name"];
+            string idToSearch = req.Query["id"];
 
             dynamic data = JsonConvert.DeserializeObject(await new StreamReader(req.Body).ReadToEndAsync());
-            nameToSearch = nameToSearch ?? data?.name ?? string.Empty;
+            idToSearch = idToSearch ?? data?.id ?? string.Empty;
 
             try
             {
-                var recipes = await new RecipeRepository().GetByAsync("Name", nameToSearch);
+                var recipes = (await new RecipeRepository().GetById(idToSearch));
                 return new OkObjectResult(recipes);
             }
             catch (Exception ex)

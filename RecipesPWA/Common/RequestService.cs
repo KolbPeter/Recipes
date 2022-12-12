@@ -51,11 +51,33 @@ namespace RecipesPWA.Common
         }
 
         /// <inheritdoc/>
+        public async Task<T?> GetById(
+            string id,
+            IEnumerable<RequestHeader>? headers = null)
+        {
+            DefaultHeaders();
+            var url = UrlString("/api/GetById", new[] { new HTTPQuery() { Name = "Id", Value = id } });
+            var httpResponseMessage = await _client.GetAsync(url);
+            var contentString = await httpResponseMessage.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(contentString, _serializerOptions) ?? default;
+        }
+
+        /// <inheritdoc/>
         public async Task<T> Add(T newObject, IEnumerable<RequestHeader>? headers = null)
         {
             var url = UrlString("/api/Add");
             var stringContent = new StringContent(JsonSerializer.Serialize(newObject));
             var httpResponseMessage = await _client.PostAsync(url, stringContent);
+            var contentString = await httpResponseMessage.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(contentString, _serializerOptions)!;
+        }
+
+        /// <inheritdoc/>
+        public async Task<T> Update(T objectToUpdate, IEnumerable<RequestHeader>? headers = null)
+        {
+            var url = UrlString("/api/Update");
+            var stringContent = new StringContent(JsonSerializer.Serialize(objectToUpdate));
+            var httpResponseMessage = await _client.PutAsync(url, stringContent);
             var contentString = await httpResponseMessage.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(contentString, _serializerOptions)!;
         }
