@@ -1,7 +1,7 @@
 # Recipes
 
-## Am of teh project:
-To create a Blazor progressive web assembly to manipulate recipes, stored in an Azure Mongo database. The recipes can be created, retrieved, updated and deleted through an Azure Function App, using HTTP triggers. Every part of the solution is stored and can be reached on Azure. Uses free solutions where it was possibly, current setup can work for some euro cents per month.
+## Aim of the project:
+To create a Blazor progressive web assembly to manipulate recipes. Recipes are stored in an Azure Mongo database. The recipes can be created, retrieved, updated and deleted through an Azure Function App, using HTTP triggers. Every part of the solution is stored and can be reached on Azure. Uses free solutions where it was possibel, current setup can work for some euro cents per month.
 
 ## Curent state:
 When this readme is created the web app have a full functionality, all CRUD operations work perfectly.  
