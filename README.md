@@ -8,8 +8,10 @@ When this readme is created the web app have a full functionality, all CRUD oper
 The function app is working flawlessly too.  
 Already added Application Insights for both apps for monitoring and logging purposes.
 The database is holding 2 recipes.
+Applications using github actions to deploy apps when code changed.
 
 ## Future plans:
+- Using Azure secrets instead of put sensitive info in appsettings.json.
 - Add logging capabilities, especially for the web app(RecipesPWA).
 - Add authentication and authorization for RecipesPWA, at least for modify and delete recipes.
 - Add logging when modify or delete a recipe.
