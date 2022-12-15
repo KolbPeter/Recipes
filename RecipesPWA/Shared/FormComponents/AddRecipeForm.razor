@@ -6,7 +6,7 @@
 @inherits RecipeForm
 
 <EditForm class="recipe"
-          EditContext="@_editContext"
+          Model="@TValue"
           OnValidSubmit="() => InvokeValueChangedCallback(TValue)"
           OnInvalidSubmit="() => InvokeValueChangedCallback(BackupValue)">
     <DataAnnotationsValidator/>
@@ -19,7 +19,8 @@
 
 </EditForm>
 
-@code {
+@code
+{
     protected override string SubmitButtonText(bool isNew, bool mustBeRemoved)
     {
         return "Feltölt";

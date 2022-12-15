@@ -6,14 +6,14 @@
 @inherits RecipeForm
 
 <EditForm class="recipe"
-          EditContext="@_editContext"
+          Model="@TValue"
           OnValidSubmit="() => InvokeValueChangedCallback(TValue)"
           OnInvalidSubmit="() => InvokeValueChangedCallback(BackupValue)">
-    <DataAnnotationsValidator />
+    <DataAnnotationsValidator/>
 
-    <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Recept:" />
-    <SubRecipesForm @bind-Value="@TValue.SubRecipes" Values="@TValue.SubRecipes" />
-    <InputTextArea class="input-field text-input-wide" @bind-Value="@Instruction" />
+    <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Recept:"/>
+    <SubRecipesForm @bind-Value="@TValue.SubRecipes" Values="@TValue.SubRecipes"/>
+    <InputTextArea class="input-field text-input-wide" @bind-Value="@Instruction"/>
 
     <button class="submit-button input-field-10percent" type="submit" onclick="@OnMouseClick">@ButtonText</button>
 
@@ -21,9 +21,6 @@
 
 @code
 {
-    [Parameter]
-    public new Recipe TValue { get; set; }
-
     protected override string SubmitButtonText(bool isNew, bool mustBeRemoved)
     {
         return "Módosít";
@@ -33,7 +30,7 @@
     {
         var validationResult = _editContext.Validate();
 
-        if (validationResult)
+        if (validationResult && TValue != null)
         {
             TValue = await RequestService.Update(TValue);
             NavigationManager.NavigateTo("/");

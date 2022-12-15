@@ -28,6 +28,7 @@ else
         <RecipeComponent Recipe="@Recipes.FirstOrDefault(x => x.Id == SelectedRecipe)"></RecipeComponent>
         <EditForm Model="SelectedRecipe">
             <button class="submit-button input-field-10percent" type="submit" onclick="@OnModifyClick">Módosít</button>
+            <button class="submit-button input-field-10percent" type="submit" onclick="@OnDeleteClick">Töröl</button>
         </EditForm>
     }
 }
@@ -45,5 +46,10 @@ else
     public void OnModifyClick()
     {
         NavigationManager.NavigateTo($"modifyrecipe/{SelectedRecipe}");
+    }
+
+    public void OnDeleteClick()
+    {
+        NavigationManager.NavigateTo($"deleterecipe/{SelectedRecipe}");
     }
 }

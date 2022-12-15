@@ -1,9 +1,9 @@
 ﻿@page "/modifyrecipe/{recipeId}"
-
-@using RecipesPWA.Shared.FormComponents
 @using RecipesPWA.Common.Recipes
-@using RecipesPWA.Common.Components
 @using RecipesPWA.Common
+@using RecipesPWA.Common.Components
+@using RecipesPWA.Shared.FormComponents
+
 @inject IRequestService<Recipe> RequestService
 @inject NavigationManager NavigationManager
 
@@ -12,15 +12,22 @@
 <h1>Recept módosítása</h1>
 
 <EditForm Model="@RecipeToModify">
-    <AddRecipeForm @bind-Value="@RecipeToModify"
+    <ModifyRecipeForm @bind-Value="@RecipeToModify"
                    TValue="@RecipeToModify.Value" />
 </EditForm>
 
 @code {
     [Parameter]
     public string recipeId { get; set; }
-    
-    private OrderedGeneric<Recipe> RecipeToModify { get; set; }
+
+    private OrderedGeneric<Recipe> RecipeToModify { get; set; } = new(
+        order: 0,
+        value: new Recipe
+        {
+            Name = string.Empty,
+            Instructions = Array.Empty<string>(),
+            SubRecipes = Array.Empty<SubRecipe>()
+        });
 
     protected override async Task OnInitializedAsync()
     {
@@ -32,7 +39,6 @@
 
         RecipeToModify = new(
             order: 0,
-            value: recipeToModify);
-        await base.OnInitializedAsync();
+            value: recipeToModify!);
     }
 }

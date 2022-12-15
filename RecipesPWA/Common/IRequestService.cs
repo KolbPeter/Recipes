@@ -52,4 +52,14 @@ public interface IRequestService<T> where T : class
     Task<T> Update(
         T objectToUpdate,
         IEnumerable<RequestHeader>? headers = null);
+
+    /// <summary>
+    /// Send a request with the given <paramref name="headers"/>.
+    /// </summary>
+    /// <param name="objectToDelete">The object of type <typeparamref name="T"/> to delete.</param>
+    /// <param name="headers">The headers for the request.</param>
+    /// <returns>Returns a task that evaluates to an object of <typeparam name="T">.</typeparam></returns>
+    Task<T> Remove(
+        T objectToDelete,
+        IEnumerable<RequestHeader>? headers = null);
 }

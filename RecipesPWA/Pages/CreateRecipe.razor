@@ -1,8 +1,8 @@
 ﻿@page "/createrecipe"
 
-@using RecipesPWA.Shared.FormComponents
-@using RecipesPWA.Common.Recipes
 @using RecipesPWA.Common.Components
+@using RecipesPWA.Common.Recipes
+@using RecipesPWA.Shared.FormComponents
 
 <PageTitle>Receptek</PageTitle>
 
@@ -11,11 +11,16 @@
 <EditForm Model="@NewRecipe">
     <AddRecipeForm
         @bind-Value="@NewRecipe"
-        TValue="@NewRecipe.Value" />
+        TValue="@NewRecipe.Value"/>
 </EditForm>
 
 @code {
     private OrderedGeneric<Recipe> NewRecipe { get; set; } = new(
         order: 0,
-        value: new Recipe{ Name = string.Empty, Instructions = Array.Empty<string>(), SubRecipes = Array.Empty<SubRecipe>() });
+        value: new Recipe
+        {
+            Name = string.Empty,
+            Instructions = Array.Empty<string>(),
+            SubRecipes = Array.Empty<SubRecipe>()
+        });
 }
