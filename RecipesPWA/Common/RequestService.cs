@@ -11,7 +11,7 @@ namespace RecipesPWA.Common
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
         private readonly IEnumerable<RequestHeader> _defaultHeaders;
-        private readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+        private readonly JsonSerializerOptions _serializerOptions = new() { PropertyNameCaseInsensitive = true };
 
         /// <summary>
         /// Constructor for a <see cref="IRequestService{T}"/> implementation.
@@ -46,7 +46,7 @@ namespace RecipesPWA.Common
         {
             return await new HttpRequest()
                 .AddHeaders(_defaultHeaders)
-                .SetUrlString(UrlString("/api/GetByName", new[] { new HTTPQuery() { Name = "Name", Value = name } }))
+                .SetUrlString(UrlString("/api/GetByName", new Dictionary<string, string> { { "Name", name } }))
                 .SendRequestAsync(
                     httpClient: _client,
                     defaultReturnValue: Enumerable.Empty<T>());
@@ -59,7 +59,7 @@ namespace RecipesPWA.Common
         {
             return await new HttpRequest()
                 .AddHeaders(_defaultHeaders)
-                .SetUrlString(UrlString("/api/GetById", new[] { new HTTPQuery() { Name = "Id", Value = id } }))
+                .SetUrlString(UrlString("/api/GetById", new Dictionary<string, string>{ { "Id", id } }))
                 .SendRequestAsync<T?>(
                     httpClient: _client,
                     defaultReturnValue: default);
@@ -71,9 +71,9 @@ namespace RecipesPWA.Common
             return await new HttpRequest()
                 .AddHeaders(_defaultHeaders)
                 .SetMethod(HttpMethod.Post)
-                .SetContent(new StringContent(JsonSerializer.Serialize(newObject)))
+                .SetContent(new StringContent(JsonSerializer.Serialize(newObject, _serializerOptions)))
                 .SetUrlString(UrlString("/api/Add"))
-                .SendRequestAsync<T>(
+                .SendRequestAsync(
                     httpClient: _client,
                     defaultReturnValue: new T());
         }
@@ -84,9 +84,9 @@ namespace RecipesPWA.Common
             return await new HttpRequest()
                 .AddHeaders(_defaultHeaders)
                 .SetMethod(HttpMethod.Put)
-                .SetContent(new StringContent(JsonSerializer.Serialize(objectToUpdate)))
+                .SetContent(new StringContent(JsonSerializer.Serialize(objectToUpdate, _serializerOptions)))
                 .SetUrlString(UrlString("/api/Update"))
-                .SendRequestAsync<T>(
+                .SendRequestAsync(
                     httpClient: _client,
                     defaultReturnValue: new T());
         }
@@ -97,41 +97,19 @@ namespace RecipesPWA.Common
             return await new HttpRequest()
                 .AddHeaders(_defaultHeaders)
                 .SetMethod(HttpMethod.Delete)
-                .SetContent(new StringContent(JsonSerializer.Serialize(objectToDelete)))
+                .SetContent(new StringContent(JsonSerializer.Serialize(objectToDelete, _serializerOptions)))
                 .SetUrlString(UrlString("/api/Remove"))
-                .SendRequestAsync<T>(
+                .SendRequestAsync(
                     httpClient: _client,
                     defaultReturnValue: new T());
         }
 
-        private string UrlString(string route, IEnumerable<HTTPQuery>? queries = null) =>
+        private string UrlString(string route, IDictionary<string, string>? queries = null) =>
             $"{_configuration["BasicUrl"]}{route}{QueryString(queries)}";
 
-        private string QueryString(IEnumerable<HTTPQuery>? queries) =>
+        private string QueryString(IDictionary<string, string>? queries) =>
             queries != null
-            ? $"?{string.Join("&", queries.Select(x => $"{x.Name}={x.Value}").ToArray())}"
+            ? $"?{string.Join("&", queries.Select(x => $"{x.Key}={x.Value}").ToArray())}"
             : string.Empty;
-
-        private void DefaultHeaders()
-        {
-            _client.DefaultRequestHeaders.Clear();
-            AddHeaders(_defaultHeaders);
-        }
-
-        private void AddHeader(RequestHeader header)
-        {
-            _client.DefaultRequestHeaders.Add(header.Name, header.Value);
-        }
-
-        private void AddHeaders(IEnumerable<RequestHeader>? headers)
-        {
-            if (headers != null)
-            {
-                foreach (var header in headers)
-                {
-                    AddHeader(header);
-                }
-            }
-        }
     }
 }

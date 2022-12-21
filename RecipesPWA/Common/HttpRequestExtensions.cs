@@ -7,7 +7,7 @@ namespace RecipesPWA.Common
     /// </summary>
     public static class HttpRequestExtensions
     {
-        private static readonly JsonSerializerOptions _serializerOptions = new()
+        private static readonly JsonSerializerOptions SerializerOptions = new()
         {
             PropertyNameCaseInsensitive = true
         };
@@ -72,7 +72,7 @@ namespace RecipesPWA.Common
                 JsonSerializer
                     .Deserialize<T>(
                         json: await httpRequest.WaitResponseStringAsync(httpClient),
-                        options: _serializerOptions)
+                        options: SerializerOptions)
                 ?? defaultReturnValue;
 
         private static async Task<string> WaitResponseStringAsync(this HttpRequest httpRequest, HttpClient httpClient)
