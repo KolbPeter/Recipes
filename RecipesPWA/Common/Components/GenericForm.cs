@@ -12,6 +12,11 @@ public abstract class GenericForm<T> : InputBase<OrderedGeneric<T>>
 where T : class
 {
     /// <summary>
+    /// Gets a value that indicates if the form was changed or not.
+    /// </summary>
+    public bool IsModified => !BackupValue?.Equals(TValue) ?? true;
+
+    /// <summary>
     /// The <see cref="EditContext"/> to use for the form.
     /// </summary>
     public EditContext _editContext;

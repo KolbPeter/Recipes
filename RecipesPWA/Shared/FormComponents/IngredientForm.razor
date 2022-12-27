@@ -10,8 +10,11 @@
     <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Összetevő:"></InputText>
     <InputNumber class="input-field input-field-10percent" @bind-Value="@TValue.Quantity" placeholder="Mennyiség:"></InputNumber>
     <InputText class="input-field input-field-20percent" @bind-Value="@TValue.Unit" placeholder="Egység:"></InputText>
-
-    <button class="submit-button input-field-10percent" type="submit">@ButtonText</button>
+    
+    @if (IsModified)
+    {
+        <button class="submit-button input-field-10percent" type="submit">@ButtonText</button>
+    }
 
 </EditForm>
 
