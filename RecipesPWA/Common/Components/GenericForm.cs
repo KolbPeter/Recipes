@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using RecipesPWA.Common.Components;
 
-namespace RecipesPWA.Common.Recipes;
+namespace RecipesPWA.Common.Components;
 
 /// <summary>
 /// Abstract class to use as a base for forms that handle <typeparam name="T"></typeparam> as binded value.
@@ -11,6 +10,11 @@ namespace RecipesPWA.Common.Recipes;
 public abstract class GenericForm<T> : InputBase<OrderedGeneric<T>>
 where T : class
 {
+    /// <summary>
+    /// Gets a value that indicates if the form was changed or not.
+    /// </summary>
+    public bool IsModified => !BackupValue?.Equals(TValue) ?? true;
+
     /// <summary>
     /// The <see cref="EditContext"/> to use for the form.
     /// </summary>

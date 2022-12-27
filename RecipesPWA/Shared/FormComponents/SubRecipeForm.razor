@@ -1,5 +1,5 @@
 ﻿@using RecipesPWA.Common.Recipes
-@inherits GenericForm<SubRecipe>
+@inherits RecipesPWA.Common.Components.GenericForm<SubRecipe>
 
 <EditForm class="sub-recipe"
           EditContext="@_editContext"
@@ -11,14 +11,17 @@
     <IngredientsForm @bind-Value="@TValue.Ingredients" Values="@TValue.Ingredients"></IngredientsForm>
     <InputText class="input-field" @bind-Value="@TValue.Preparation" placeholder="Elkészítés:"></InputText>
 
-    <button class="submit-button input-field-10percent right" type="submit">@ButtonText</button>
+    @if (IsNew)
+    {
+        <button class="submit-button input-field-10percent right" type="submit">@ButtonText</button>
+    }
 
 </EditForm>
 
 @code {
     public override bool MustBeRemoved() =>
         string.IsNullOrEmpty(TValue?.Name ?? null);
-
+    
     public override SubRecipe ResetValue() =>
-        new () { Name = string.Empty, Ingredients = Enumerable.Empty<Ingredient>(), Preparation = string.Empty};
+        TValue ?? new () { Name = string.Empty, Ingredients = Enumerable.Empty<Ingredient>(), Preparation = string.Empty};
 }

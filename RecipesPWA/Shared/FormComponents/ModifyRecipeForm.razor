@@ -13,7 +13,7 @@
 
     <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Recept:"/>
     <SubRecipesForm @bind-Value="@TValue.SubRecipes" Values="@TValue.SubRecipes"/>
-    <InputTextArea class="input-field text-input-wide" @bind-Value="@Instruction"/>
+    <InputTextArea class="input-field text-input-area" @bind-Value="@Instruction" rows="@NumberOfLines"/>
 
     <button class="submit-button input-field-10percent" type="submit" onclick="@OnMouseClick">@ButtonText</button>
 
@@ -21,9 +21,11 @@
 
 @code
 {
+    private int NumberOfLines => TValue?.Instructions.Count() ?? 1;
+
     protected override string SubmitButtonText(bool isNew, bool mustBeRemoved)
     {
-        return "Módosít";
+        return "Recept módosít";
     }
 
     protected override async void OnMouseClick()
