@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using RecipesPWA.Common.Components;
 
-namespace RecipesPWA.Common.Recipes;
+namespace RecipesPWA.Common.Components;
 
 /// <summary>
 /// Abstract class to use as a base for forms that handle <typeparam name="T"></typeparam> as binded value.

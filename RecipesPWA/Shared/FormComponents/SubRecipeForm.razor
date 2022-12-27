@@ -1,5 +1,5 @@
 ﻿@using RecipesPWA.Common.Recipes
-@inherits GenericForm<SubRecipe>
+@inherits RecipesPWA.Common.Components.GenericForm<SubRecipe>
 
 <EditForm class="sub-recipe"
           EditContext="@_editContext"
@@ -11,7 +11,10 @@
     <IngredientsForm @bind-Value="@TValue.Ingredients" Values="@TValue.Ingredients"></IngredientsForm>
     <InputText class="input-field" @bind-Value="@TValue.Preparation" placeholder="Elkészítés:"></InputText>
 
-    <button class="submit-button input-field-10percent right" type="submit">@ButtonText</button>
+    @if (IsNew)
+    {
+        <button class="submit-button input-field-10percent right" type="submit">@ButtonText</button>
+    }
 
 </EditForm>
 
