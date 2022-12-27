@@ -15,11 +15,11 @@
 }
 else
 {
-    <select class="select-form" @bind="@SelectedRecipe">
-        <option class="select-form-option" value="none">Nincs kiválasztva</option>
+    <select class="input-form" @bind="@SelectedRecipe">
+        <option class="input-form-option" value="none">Nincs kiválasztva</option>
         @foreach (var recipe in Recipes)
         {
-            <option class="select-form-option" value="@recipe.Id">@recipe.Name</option>
+            <option class="input-form-option" value="@recipe.Id">@recipe.Name</option>
         }
     </select>
     <br />

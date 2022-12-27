@@ -105,7 +105,7 @@ namespace RecipesPWA.Common
         }
 
         private string UrlString(string route, IDictionary<string, string>? queries = null) =>
-            $"{_configuration["BasicUrl"]}{route}{QueryString(queries)}";
+            $"{_configuration["BaseUrl"]}{route}{QueryString(queries)}";
 
         private string QueryString(IDictionary<string, string>? queries) =>
             queries != null
