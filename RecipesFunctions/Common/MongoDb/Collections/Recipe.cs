@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Common.MongoDb.Collections
+namespace RecipesFunctions.Common.MongoDb.Collections
 {
     public record Recipe : IEntity
     {

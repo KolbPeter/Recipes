@@ -1,11 +1,12 @@
-﻿using Common.MongoDb.Collections;
-using Common.MongoDb.Context;
+﻿using RecipesFunctions.Common.MongoDb.Collections;
+using RecipesFunctions.Common.MongoDb.Context;
 
-namespace Common.MongoDb.Repositories
+namespace RecipesFunctions.Common.MongoDb.Repositories
 {
     public class RecipeRepository : GenericMongoDbRepository<Recipe>
     {
-        public RecipeRepository() : base(new MongoDbContext().Recipies)
+        public RecipeRepository(IMongoDbContext mongoDbContext)
+            : base(mongoDbContext.Recipes)
         {
         }
     }

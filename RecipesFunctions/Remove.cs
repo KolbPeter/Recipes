@@ -4,20 +4,27 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using RecipesFunctions.Common;
+using RecipesFunctions.Common.MongoDb.Collections;
+using RecipesFunctions.Common.MongoDb.Repositories;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Common;
-using Common.MongoDb.Collections;
-using Common.MongoDb.Repositories;
 
 namespace RecipesFunctions
 {
-    public static class Remove
+    public class Remove
     {
+        private readonly IMongoDbRepository<Recipe> _recipeRepository;
+
+        public Remove(IMongoDbRepository<Recipe> recipeRepository)
+        {
+            _recipeRepository = recipeRepository;
+        }
+
         [FunctionName("Remove")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "Remove")] HttpRequest req,
             ExecutionContext executionContext,
             ILogger log)
@@ -38,7 +45,7 @@ namespace RecipesFunctions
 
             try
             {
-                var result = await new RecipeRepository().RemoveAsync(recipe);
+                var result = await _recipeRepository.RemoveAsync(recipe);
                 if (result.IsAcknowledged && result.DeletedCount == 1)
                 {
                     return new OkObjectResult(recipe);

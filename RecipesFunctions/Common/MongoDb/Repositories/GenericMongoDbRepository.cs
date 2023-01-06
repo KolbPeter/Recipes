@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using RecipesFunctions.Common.MongoDb.Collections;
+using RecipesFunctions.Common.MongoDb.Repositories;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Common.MongoDb.Collections;
-using Common.MongoDb.Context;
+using RecipesFunctions.Common.MongoDb.Context;
 
-namespace Common.MongoDb.Repositories
+namespace RecipesFunctions.Common.MongoDb.Repositories
 {
     /// <summary>
     /// Default implementation of <see cref="IMongoDbRepository{TDocument}"/>.

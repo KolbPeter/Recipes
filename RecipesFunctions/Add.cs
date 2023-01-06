@@ -4,20 +4,27 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using RecipesFunctions.Common;
+using RecipesFunctions.Common.MongoDb.Collections;
+using RecipesFunctions.Common.MongoDb.Repositories;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Common;
-using Common.MongoDb.Collections;
-using Common.MongoDb.Repositories;
 
 namespace RecipesFunctions
 {
-    public static class Add
+    public class Add
     {
+        private readonly IMongoDbRepository<Recipe> _recipeRepository;
+
+        public Add(IMongoDbRepository<Recipe> recipeRepository)
+        {
+            _recipeRepository = recipeRepository;
+        }
+
         [FunctionName("Add")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Add")] HttpRequest req,
             ExecutionContext executionContext,
             ILogger log)
@@ -38,7 +45,7 @@ namespace RecipesFunctions
 
             try
             {
-                var result = await new RecipeRepository().CreateAsync(recipe);
+                var result = await _recipeRepository.CreateAsync(recipe);
                 return new OkObjectResult(result);
             }
             catch (Exception ex)

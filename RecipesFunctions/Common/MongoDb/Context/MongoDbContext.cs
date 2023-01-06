@@ -1,24 +1,25 @@
-﻿using MongoDB.Driver;
-using Common.MongoDb.Collections;
+﻿using Microsoft.Extensions.Configuration;
+using RecipesFunctions.Common.MongoDb.Collections;
+using MongoDB.Driver;
 
-namespace Common.MongoDb.Context
+namespace RecipesFunctions.Common.MongoDb.Context
 {
     public class MongoDbContext : IMongoDbContext
     {
-        //private const string connectionString = "mongodb://receptek:RnagH1zYhzte3gJVacsszlvclzVYWFw1i35TNo1uiGz8Xcks1d5xAfzVDGVV8FaZstoRYa4xAfcsSxPUNSv6DA%3D%3D@receptek.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@receptek@";
-        private const string connectionString = "mongodb://kp-recipes:kC6nhOSRODXIA4aKAa5apUmZQ17fys7Sb51b4OXb65YWXzbKnbcnrSbFmyPvwLiEozqqGJWkVVrAuCTiC8lSpQ==@kp-recipes.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@kp-recipes@";
         private readonly IMongoDatabase database;
+        private readonly string _connectionString;
 
         /// <summary>
         /// Creates a Mongo db context.
         /// </summary>
-        public MongoDbContext()
+        public MongoDbContext(IConfiguration configuration)
         {
-            this.database = new MongoClient(connectionString).GetDatabase("Recipes");
+            _connectionString = configuration["ConnectionString"];
+            this.database = new MongoClient(_connectionString).GetDatabase("Recipes");
         }
 
         /// <inheritdoc />
-        public IMongoCollection<Recipe> Recipies =>
+        public IMongoCollection<Recipe> Recipes =>
             database.GetCollection<Recipe>("Recipes");
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
-using Common.MongoDb.Collections;
+using RecipesFunctions.Common.MongoDb.Collections;
 
-namespace Common.MongoDb.Repositories;
+namespace RecipesFunctions.Common.MongoDb.Repositories;
 
 /// <summary>
 /// Interface for MongoDB service.

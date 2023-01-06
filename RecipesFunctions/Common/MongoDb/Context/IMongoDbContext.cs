@@ -1,13 +1,13 @@
-﻿using MongoDB.Driver;
-using Common.MongoDb.Collections;
+﻿using RecipesFunctions.Common.MongoDb.Collections;
+using MongoDB.Driver;
 
-namespace Common.MongoDb.Context
+namespace RecipesFunctions.Common.MongoDb.Context
 {
     public interface IMongoDbContext
     {
         /// <summary>
         /// Gets all elements of a collection.
         /// </summary>
-        IMongoCollection<Recipe> Recipies { get; }
+        IMongoCollection<Recipe> Recipes { get; }
     }
 }

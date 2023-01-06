@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common
+namespace RecipesFunctions.Common
 {
     public static class ExceptionExtenions
     {

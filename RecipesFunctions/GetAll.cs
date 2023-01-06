@@ -3,18 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using RecipesFunctions.Common;
+using RecipesFunctions.Common.MongoDb.Repositories;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Common;
-using Common.MongoDb.Repositories;
+using RecipesFunctions.Common.MongoDb.Collections;
 
 namespace RecipesFunctions
 {
-    public static class GetAll
+    public class GetAll
     {
+        private readonly IMongoDbRepository<Recipe> _recipeRepository;
+
+        public GetAll(IMongoDbRepository<Recipe> recipeRepository)
+        {
+            _recipeRepository = recipeRepository;
+        }
+
         [FunctionName("GetAll")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger( AuthorizationLevel.Function, "get", Route = "GetAll")] HttpRequest req,
             ExecutionContext executionContext,
             ILogger log)
@@ -23,7 +31,7 @@ namespace RecipesFunctions
 
             try
             {
-                var recipes = await new RecipeRepository().GetAllAsync();
+                var recipes = await _recipeRepository.GetAllAsync();
                 return new OkObjectResult(recipes);
             }
             catch (Exception ex)

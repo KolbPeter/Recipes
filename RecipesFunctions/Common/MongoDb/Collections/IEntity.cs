@@ -1,4 +1,4 @@
-﻿namespace Common.MongoDb.Collections
+﻿namespace RecipesFunctions.Common.MongoDb.Collections
 {
     public interface IEntity
     {
