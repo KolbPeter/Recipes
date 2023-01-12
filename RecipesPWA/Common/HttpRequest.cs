@@ -9,7 +9,7 @@
         /// Gets the Url string for this request.
         /// </summary>
         public string Url { get; init; } = string.Empty;
-        
+
         /// <summary>
         /// Gets the <see cref="HttpMethod"/> to use for this request.
         /// </summary>

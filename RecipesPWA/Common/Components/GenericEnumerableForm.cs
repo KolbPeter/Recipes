@@ -8,7 +8,7 @@ namespace RecipesPWA.Common.Components;
 /// </summary>
 /// <typeparam name="T">The type of the binded values.</typeparam>
 public abstract class GenericEnumerableForm<T> : InputBase<IEnumerable<T>>
-where T : class
+    where T : class
 {
     /// <summary>
     /// A <see cref="OrderedGeneric{T}"/> to store the edited value.
@@ -22,6 +22,7 @@ where T : class
             NewTValueChanged(value.Value, value.Order);
         }
     }
+
     private OrderedGeneric<T> _newTValue;
 
     /// <summary>

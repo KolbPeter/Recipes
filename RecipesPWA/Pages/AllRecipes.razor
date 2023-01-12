@@ -17,7 +17,9 @@
 }
 else
 {
-    <p><em>Hamarosan...</em></p>
+    <p>
+        <em>Hamarosan...</em>
+    </p>
 }
 
 @code {
@@ -28,4 +30,5 @@ else
         Recipes = await RequestService.GetAll();
         Recipes = Recipes.OrderBy(x => x.Name);
     }
+
 }

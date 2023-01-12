@@ -17,7 +17,7 @@ namespace RecipesPWA.Common.Validators
         /// not null and contains at least 1 element, otherwise false.</returns>
         public override bool IsValid(object value) =>
             value is not null
-            &&value is IEnumerable<T>
+            && value is IEnumerable<T>
             && ((IEnumerable<T>)value).Any();
     }
 }

@@ -2,12 +2,16 @@
 @using System.Globalization
 
 <div class="recipe">
-    <label><h1>@Recipe.Name</h1></label>
-    <br />
+    <label>
+        <h1>@Recipe.Name</h1>
+    </label>
+    <br/>
     @foreach (var subRecipe in Recipe.SubRecipes)
     {
         <div class="sub-recipe">
-            <label style="float: right"><h2>@subRecipe.Name</h2></label>
+            <label style="float: right">
+                <h2>@subRecipe.Name</h2>
+            </label>
             <table>
                 @foreach (var ingredient in subRecipe.Ingredients)
                 {
@@ -30,6 +34,8 @@
 </div>
 
 @code {
+
     [Parameter]
     public Recipe Recipe { get; set; }
+
 }

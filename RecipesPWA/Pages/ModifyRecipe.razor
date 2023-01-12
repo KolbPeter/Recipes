@@ -14,11 +14,12 @@
 {
     <EditForm Model="@RecipeToModify">
         <ModifyRecipeForm @bind-Value="@RecipeToModify"
-                          TValue="@RecipeToModify.Value" />
+                          TValue="@RecipeToModify.Value"/>
     </EditForm>
 }
 
 @code {
+
     [Parameter]
     public string recipeId { get; set; }
 
@@ -36,4 +37,5 @@
             order: 0,
             value: recipeToModify!);
     }
+
 }

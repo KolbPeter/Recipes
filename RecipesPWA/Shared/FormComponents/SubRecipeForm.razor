@@ -19,9 +19,11 @@
 </EditForm>
 
 @code {
+
     public override bool MustBeRemoved() =>
         string.IsNullOrEmpty(TValue?.Name ?? null);
-    
+
     public override SubRecipe ResetValue() =>
-        TValue ?? new () { Name = string.Empty, Ingredients = Enumerable.Empty<Ingredient>(), Preparation = string.Empty};
+        TValue ?? new() { Name = string.Empty, Ingredients = Enumerable.Empty<Ingredient>(), Preparation = string.Empty };
+
 }

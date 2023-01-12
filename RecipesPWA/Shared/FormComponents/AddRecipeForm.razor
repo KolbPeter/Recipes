@@ -10,10 +10,10 @@
           OnValidSubmit="() => InvokeValueChangedCallback(TValue)"
           OnInvalidSubmit="() => InvokeValueChangedCallback(BackupValue)">
     <DataAnnotationsValidator/>
-    
-    <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Recept:" />
-    <SubRecipesForm @bind-Value="@TValue.SubRecipes" Values="@TValue.SubRecipes" />
-    <InputTextArea class="input-field text-input-area" @bind-Value="@Instruction" rows="@NumberOfLines" />
+
+    <InputText class="input-field input-field-30percent" @bind-Value="@TValue.Name" placeholder="Recept:"/>
+    <SubRecipesForm @bind-Value="@TValue.SubRecipes" Values="@TValue.SubRecipes"/>
+    <InputTextArea class="input-field text-input-area" @bind-Value="@Instruction" rows="@NumberOfLines"/>
 
     <button class="submit-button input-field-10percent right" type="submit" onclick="@OnMouseClick">@ButtonText</button>
 

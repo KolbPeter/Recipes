@@ -6,19 +6,20 @@
     @foreach (var value in Values.Select((x, i) => new OrderedGeneric<Ingredient>(x, i)))
     {
         <IngredientForm @bind-Value="NewTValue"
-                    Order="@value.Order"
-                    IsNew="@false"
-                    TValue="@value.Value" />
+                        Order="@value.Order"
+                        IsNew="@false"
+                        TValue="@value.Value"/>
     }
 
     <IngredientForm @bind-Value="NewTValue"
                     Order="@Values.Count()"
                     IsNew="@true"
-                    TValue="@NewTValue.Value" />
+                    TValue="@NewTValue.Value"/>
 
 </EditForm>
 
 @code {
+
     public override OrderedGeneric<Ingredient> ResetNewTValue()
     {
         return new OrderedGeneric<Ingredient>(
@@ -30,4 +31,5 @@
     {
         return string.IsNullOrEmpty(value.Name);
     }
+
 }

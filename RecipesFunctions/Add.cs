@@ -50,7 +50,7 @@ namespace RecipesFunctions
             }
             catch (Exception ex)
             {
-                log.LogError($"Deserialization failed with {ex.InnerstException()}");
+                log.LogError($"Adding recipe to database failed with {ex.InnerstException()}");
                 return new BadRequestErrorMessageResult($"Adding recipe to database failed: {ex.InnerstException()}");
             }
         }

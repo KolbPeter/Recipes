@@ -8,7 +8,7 @@ namespace RecipesPWA.Common.Components;
 /// </summary>
 /// <typeparam name="T">The type of the binded value.</typeparam>
 public abstract class GenericForm<T> : InputBase<OrderedGeneric<T>>
-where T : class
+    where T : class
 {
     /// <summary>
     /// Gets a value that indicates if the form was changed or not.
@@ -101,7 +101,9 @@ where T : class
     }
 
     /// <inheritdoc />
-    protected override bool TryParseValueFromString(string? value, out OrderedGeneric<T> result, out string validationErrorMessage)
+    protected override bool TryParseValueFromString(
+        string? value, out OrderedGeneric<T> result,
+        out string validationErrorMessage)
     {
         var validationResult = _editContext.Validate();
         result = validationResult
@@ -126,6 +128,7 @@ where T : class
         {
             _editContext.OnFieldChanged += OnFieldChanged;
         }
+
         return base.OnInitializedAsync();
     }
 }

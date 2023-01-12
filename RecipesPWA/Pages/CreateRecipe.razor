@@ -15,6 +15,7 @@
 </EditForm>
 
 @code {
+
     private OrderedGeneric<Recipe> NewRecipe { get; set; } = new(
         order: 0,
         value: new Recipe
@@ -23,4 +24,5 @@
             Instructions = Array.Empty<string>(),
             SubRecipes = Array.Empty<SubRecipe>()
         });
+
 }

@@ -25,7 +25,6 @@ namespace RecipesPWA.Common
                 .GetSection("RequestHeaders")
                 .Get<IEnumerable<RequestHeader>>();
             _defaultHeaders ??= Enumerable.Empty<RequestHeader>();
-
         }
 
         /// <inheritdoc/>
@@ -59,7 +58,7 @@ namespace RecipesPWA.Common
         {
             return await new HttpRequest()
                 .AddHeaders(_defaultHeaders)
-                .SetUrlString(UrlString("/api/GetById", new Dictionary<string, string>{ { "Id", id } }))
+                .SetUrlString(UrlString("/api/GetById", new Dictionary<string, string> { { "Id", id } }))
                 .SendRequestAsync<T?>(
                     httpClient: _client,
                     defaultReturnValue: default);
@@ -109,7 +108,7 @@ namespace RecipesPWA.Common
 
         private string QueryString(IDictionary<string, string>? queries) =>
             queries != null
-            ? $"?{string.Join("&", queries.Select(x => $"{x.Key}={x.Value}").ToArray())}"
-            : string.Empty;
+                ? $"?{string.Join("&", queries.Select(x => $"{x.Key}={x.Value}").ToArray())}"
+                : string.Empty;
     }
 }

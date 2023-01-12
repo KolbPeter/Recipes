@@ -39,9 +39,11 @@
 @code {
     private bool collapseNavMenu = true;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
     private IEnumerable<PageDescription> PageDescriptions => Configuration
         .GetSection("PageDescriptions")
         .Get<IEnumerable<PageDescription>>();
+
     private string HeaderText => PageDescriptions
         .FirstOrDefault(x => x.Uri == MyNavigationManager.ToBaseRelativePath(MyNavigationManager.Uri))?.Description ?? "Receptek";
 
@@ -60,4 +62,5 @@
     {
         StateHasChanged();
     }
+
 }

@@ -11,7 +11,9 @@
 
 @if (Recipes == null)
 {
-    <p><em>Hamarosan...</em></p>
+    <p>
+        <em>Hamarosan...</em>
+    </p>
 }
 else
 {
@@ -22,7 +24,7 @@ else
             <option class="input-form-option" value="@recipe.Id">@recipe.Name</option>
         }
     </select>
-    <br />
+    <br/>
     @if (SelectedRecipe != null && SelectedRecipe != "none")
     {
         <RecipeComponent Recipe="@Recipes.FirstOrDefault(x => x.Id == SelectedRecipe)"></RecipeComponent>
@@ -52,4 +54,5 @@ else
     {
         NavigationManager.NavigateTo($"deleterecipe/{SelectedRecipe}");
     }
+
 }

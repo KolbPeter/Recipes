@@ -12,14 +12,15 @@
 <h1>Recept törlése</h1>
 @if (RecipeToDelete != null)
 {
-    <RecipeComponent Recipe="@RecipeToDelete" />
+    <RecipeComponent Recipe="@RecipeToDelete"/>
     <EditForm Model="@Decision">
         <DecideForm Message="Valóban törölni akarod ezt receptet?"
-                    @bind-Value="@Decision" />
+                    @bind-Value="@Decision"/>
     </EditForm>
 }
 
 @code {
+
     [Parameter]
     public string recipeId { get; set; }
 
@@ -32,7 +33,7 @@
     private async void DecisionMade(bool value)
     {
         if (value) await RequestService.Remove(RecipeToDelete);
-        
+
         NavigationManager.NavigateTo("/selectrecipe");
     }
 
@@ -47,11 +48,12 @@
         }
 
         RecipeToDelete = new()
-            {
-                Id = recipeToDelete.Id,
-                Name = recipeToDelete.Name,
-                Instructions = recipeToDelete.Instructions,
-                SubRecipes = recipeToDelete.SubRecipes
-            };
+        {
+            Id = recipeToDelete.Id,
+            Name = recipeToDelete.Name,
+            Instructions = recipeToDelete.Instructions,
+            SubRecipes = recipeToDelete.SubRecipes
+        };
     }
+
 }

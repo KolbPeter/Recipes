@@ -69,11 +69,11 @@ namespace RecipesPWA.Common
             this HttpRequest httpRequest,
             HttpClient httpClient,
             T defaultReturnValue) =>
-                JsonSerializer
-                    .Deserialize<T>(
-                        json: await httpRequest.WaitResponseStringAsync(httpClient),
-                        options: SerializerOptions)
-                ?? defaultReturnValue;
+            JsonSerializer
+                .Deserialize<T>(
+                    json: await httpRequest.WaitResponseStringAsync(httpClient),
+                    options: SerializerOptions)
+            ?? defaultReturnValue;
 
         private static async Task<string> WaitResponseStringAsync(this HttpRequest httpRequest, HttpClient httpClient)
         {
